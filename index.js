@@ -7,14 +7,20 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // Import Routes
-const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const productRoutes = require('./routes/productRoutes');
+const coustomerRoutes = require('./routes/coustomerRoutes');
+
 
 // Use Routes
-app.use('/api/auth', authRoutes);
+app.use('/admin', adminRoutes);
 app.use('/api/products', productRoutes);
+app.use('/coustomer',coustomerRoutes);
+
+
 
 // Connect to DB and Start Server
 mongoose.connect(process.env.MONGO_URI)

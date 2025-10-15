@@ -6,7 +6,25 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+
+// Allowed origins for CORS
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5500"
+  
+]
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,  
+  })
+);
+
+
+
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // Import Routes

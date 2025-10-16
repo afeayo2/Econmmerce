@@ -8,22 +8,25 @@ const app = express();
 app.use(express.json());
 
 
-// Allowed origins for CORS
+
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5500",
-  "https://express-js-on-vercel-rust-eight.vercel.app"
-]
+  "http://192.168.0.105:5500", 
+  "https://express-js-on-vercel-rust-eight.vercel.app", 
+];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (like mobile apps or curl)
+      // Allow requests with no origin (mobile apps, curl)
       if (!origin) return callback(null, true);
+
       if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
+        callback(null, true);
       } else {
-        return callback(new Error("Not allowed by CORS"));
+        console.log("Blocked by CORS:", origin);
+        callback(new Error("Not allowed by CORS"));
       }
     },
     credentials: true,

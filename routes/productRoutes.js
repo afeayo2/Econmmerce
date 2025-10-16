@@ -3,7 +3,7 @@ const Product = require("../models/Product");
 const router = express.Router();
 
 // Public: Get all products
-router.get("/", async (req, res) => {
+router.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
     res.json(products);

@@ -49,7 +49,7 @@ app.use('/api/products', productRoutes);
 app.use('/coustomer',coustomerRoutes);
 
 
-/*
+
 // Connect to DB and Start Server
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
@@ -59,8 +59,8 @@ mongoose.connect(process.env.MONGO_URI)
     });
   })
   .catch(err => console.error(err));
-*/
 
+/*
 module.exports = app;
 
 
@@ -74,3 +74,4 @@ if (process.env.NODE_ENV !== 'production') {
     })
     .catch(err => console.error(err));
 }
+    */

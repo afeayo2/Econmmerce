@@ -123,7 +123,7 @@ for (let item of items) {
           email: dbUser.email,
           amount: totalAmount * 100,
           reference: `order_${order._id}`,
-          callback_url: `http://localhost:3000/coustomer/verify/${order._id}`
+          callback_url: `https://econmmerce.onrender.com/coustomer/verify/${order._id}`
         },
         { headers: { Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}` } }
       );

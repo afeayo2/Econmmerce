@@ -13,7 +13,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5500",
   "http://192.168.0.105:5500", 
-  "https://express-js-on-vercel-rust-eight.vercel.app", 
+  "https://twinkleweetphyn.onrender.com", 
 ];
 
 app.use(

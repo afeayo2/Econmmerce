@@ -41,6 +41,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const adminRoutes = require('./routes/adminRoutes');
 const productRoutes = require('./routes/productRoutes');
 const coustomerRoutes = require('./routes/coustomerRoutes');
+const router = require('./routes/adminRoutes');
 
 
 // Use Routes
@@ -48,7 +49,9 @@ app.use('/admin', adminRoutes);
 app.use('/api/products', productRoutes);
 app.use('/coustomer',coustomerRoutes);
 
-
+app.get('/', (req, res)=>{
+res.send('welcome to our store')
+})
 
 // Connect to DB and Start Server
 mongoose.connect(process.env.MONGO_URI)

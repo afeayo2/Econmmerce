@@ -14,6 +14,7 @@ const allowedOrigins = [
   "http://127.0.0.1:5500",
   "http://192.168.0.105:5500", 
   "https://twinkleweetphyn.onrender.com", 
+  "https://twinkleweetphyn.onrender.com"
 ];
 
 app.use(

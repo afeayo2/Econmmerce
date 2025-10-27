@@ -123,7 +123,7 @@ for (let item of items) {
           email: dbUser.email,
           amount: totalAmount * 100,
           reference: `order_${order._id}`,
-          callback_url: `https://econmmerce.onrender.com/coustomer/verify/${order._id}`
+          callback_url: `https://econmmerce-f364.vercel.app/coustomer/verify/${order._id}`
         },
         { headers: { Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}` } }
       );
@@ -263,7 +263,7 @@ router.get('/verify/:orderId', async (req, res) => {
         });
       }
 
-      return res.redirect(`http://127.0.0.1:5500/order-success.html?orderId=${orderId}`);
+      return res.redirect(`https://twinkleweetphyn.onrender.com/order-success.html?orderId=${orderId}`);
     }
 
     res.redirect(`/order-failed.html?reason=verification_failed`);

@@ -1,3 +1,74 @@
+
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cors = require('cors');
+
+dotenv.config();
+const app = express();
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5500",
+  "http://192.168.0.105:5500",
+  "https://twinkleweetphyn.onrender.com",
+  "https://api.twinkleweetphyn.com.ng",
+  "https://twinkleweetphyn.com.ng",
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("Blocked by CORS:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+
+// ✅ 1. CORS middleware first
+app.use(cors(corsOptions));
+
+// ✅ 2. Handle ALL preflight OPTIONS requests
+app.options('*', cors(corsOptions));
+
+// ✅ 3. Then body parsing
+app.use(express.json());
+
+// Import Routes
+const adminRoutes = require('./routes/adminRoutes');
+const productRoutes = require('./routes/productRoutes');
+const coustomerRoutes = require('./routes/coustomerRoutes');
+
+// Use Routes
+app.use('/admin', adminRoutes);
+app.use('/api/products', productRoutes);
+app.use('/coustomer', coustomerRoutes);
+
+app.get('/', (req, res) => {
+  res.send('welcome to our store');
+});
+
+// Connect to DB and Start Server
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('MongoDB Connected');
+    app.listen(process.env.PORT, () => {
+      console.log(`Server running on port ${process.env.PORT}`);
+    });
+  })
+  .catch(err => console.error(err));
+
+
+
+
+
+/*
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');

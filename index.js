@@ -14,9 +14,9 @@ const allowedOrigins = [
   "https://twinkleweetphyn.onrender.com",
   "https://api.twinkleweetphyn.com.ng",
   "https://twinkleweetphyn.com.ng",
+  "https://www.twinkleweetphyn.com.ng", // ✅ ADD THIS
 ];
 
-// ✅ CORS config
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
@@ -25,13 +25,12 @@ const corsOptions = {
       callback(null, true);
     } else {
       console.log("Blocked by CORS:", origin);
-      callback(new Error("Not allowed by CORS"));
+      callback(null, false); // 🔥 DON'T THROW ERROR
     }
   },
   credentials: true,
 };
 
-// ✅ Apply CORS (this already handles OPTIONS internally)
 app.use(cors(corsOptions));
 
 // ❌ REMOVE THIS LINE COMPLETELY (CAUSE OF YOUR ERROR)

@@ -1,4 +1,3 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -7,6 +6,7 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 
+// ✅ Allowed origins
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5500",
@@ -16,9 +16,9 @@ const allowedOrigins = [
   "https://twinkleweetphyn.com.ng",
 ];
 
+// ✅ CORS config
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, Postman)
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
@@ -31,42 +31,46 @@ const corsOptions = {
   credentials: true,
 };
 
-// ✅ 1. CORS middleware first
+// ✅ Apply CORS (this already handles OPTIONS internally)
 app.use(cors(corsOptions));
 
-// ✅ 2. Handle ALL preflight OPTIONS requests
-app.options('*', cors(corsOptions));
+// ❌ REMOVE THIS LINE COMPLETELY (CAUSE OF YOUR ERROR)
+// app.options('*', cors(corsOptions));
 
-// ✅ 3. Then body parsing
+
+// ✅ Body parser
 app.use(express.json());
 
-// Import Routes
+// ✅ Routes
 const adminRoutes = require('./routes/adminRoutes');
 const productRoutes = require('./routes/productRoutes');
 const coustomerRoutes = require('./routes/coustomerRoutes');
 
-// Use Routes
 app.use('/admin', adminRoutes);
 app.use('/api/products', productRoutes);
 app.use('/coustomer', coustomerRoutes);
 
+// ✅ Test route
 app.get('/', (req, res) => {
-  res.send('welcome to our store');
+  res.send('Welcome to our store');
 });
 
-// Connect to DB and Start Server
+// ✅ Connect DB and start server safely
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('MongoDB Connected');
-    app.listen(process.env.PORT, () => {
-      console.log(`Server running on port ${process.env.PORT}`);
+
+    const PORT = process.env.PORT || 5000;
+
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running on port ${PORT}`);
     });
+
   })
-  .catch(err => console.error(err));
-
-
-
-
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
 
 /*
 const express = require('express');

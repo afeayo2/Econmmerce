@@ -40,4 +40,11 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// ✅ Indexes: these fields are filtered/sorted on constantly (shop page, category
+// filters, admin listing) — without them Mongo does a full collection scan on
+// every request, which gets slower as the catalog grows.
+productSchema.index({ category: 1 });
+productSchema.index({ subCategory: 1 });
+productSchema.index({ createdAt: -1 });
+
 module.exports = mongoose.model("Product", productSchema);

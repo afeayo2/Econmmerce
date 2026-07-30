@@ -12,6 +12,13 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "ecommerce-products", // Folder in Cloudinary
     allowed_formats: ["jpg", "png", "jpeg", "webp"], // added webp
+    // Cap stored size + auto-compress. Admin uploads (often straight from a
+    // phone camera, several MB / 3000px+) were previously stored at full
+    // original size, which is what was slowing product image loads down.
+    // "limit" only shrinks images larger than this — it never upscales.
+    transformation: [
+      { width: 1600, height: 1600, crop: "limit", quality: "auto", fetch_format: "auto" }
+    ],
   },
 });
 

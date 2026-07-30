@@ -1,7 +1,7 @@
 const Product = require('../models/Product');
 
 exports.getAll = async (req, res) => {
-  const products = await Product.find();
+  const products = await Product.find().lean();
   res.json(products);
 };
 

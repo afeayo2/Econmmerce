@@ -154,7 +154,7 @@ router.put("/orders/:id", protectAdmin, async (req, res) => {
       const itemsHtml = order.items.map(item => `
         <tr style="border-bottom:1px solid #eee;">
           <td style="padding:10px; text-align:center;">
-            <img src="${item.productId?.images || 'https://via.placeholder.com/80'}" 
+            <img src="${item.productId?.images?.[0] || 'https://via.placeholder.com/80'}" 
                  alt="${item.name}" width="80" style="border-radius:6px;"/>
           </td>
           <td style="padding:10px; text-align:left;">
